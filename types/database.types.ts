@@ -149,63 +149,108 @@ export interface Database {
       yahtzee_scorecards: {
         Row: {
           bonus: number | null
+          bonus_potential: number | null
           chance: number | null
+          chance_potential: number | null
           created_at: string
+          current_dice: number[] | null
           fives: number | null
+          fives_potential: number | null
           four_kind: number | null
+          four_kind_potential: number | null
           fours: number | null
+          fours_potential: number | null
           full_house: number | null
+          full_house_potential: number | null
           game_id: string
           id: string
           large_straight: number | null
+          large_straight_potential: number | null
           ones: number | null
+          ones_potential: number | null
           player_id: string
           sixes: number | null
+          sixes_potential: number | null
           small_straight: number | null
+          small_straight_potential: number | null
           three_kind: number | null
+          three_kind_potential: number | null
           threes: number | null
+          threes_potential: number | null
           twos: number | null
+          twos_potential: number | null
           yahtzee: number | null
+          yahtzee_potential: number | null
         }
         Insert: {
           bonus?: number | null
+          bonus_potential?: number | null
           chance?: number | null
+          chance_potential?: number | null
           created_at?: string
+          current_dice?: number[] | null
           fives?: number | null
+          fives_potential?: number | null
           four_kind?: number | null
+          four_kind_potential?: number | null
           fours?: number | null
+          fours_potential?: number | null
           full_house?: number | null
+          full_house_potential?: number | null
           game_id: string
           id?: string
           large_straight?: number | null
+          large_straight_potential?: number | null
           ones?: number | null
+          ones_potential?: number | null
           player_id: string
           sixes?: number | null
+          sixes_potential?: number | null
           small_straight?: number | null
+          small_straight_potential?: number | null
           three_kind?: number | null
+          three_kind_potential?: number | null
           threes?: number | null
+          threes_potential?: number | null
           twos?: number | null
+          twos_potential?: number | null
           yahtzee?: number | null
+          yahtzee_potential?: number | null
         }
         Update: {
           bonus?: number | null
+          bonus_potential?: number | null
           chance?: number | null
+          chance_potential?: number | null
           created_at?: string
+          current_dice?: number[] | null
           fives?: number | null
+          fives_potential?: number | null
           four_kind?: number | null
+          four_kind_potential?: number | null
           fours?: number | null
+          fours_potential?: number | null
           full_house?: number | null
+          full_house_potential?: number | null
           game_id?: string
           id?: string
           large_straight?: number | null
+          large_straight_potential?: number | null
           ones?: number | null
+          ones_potential?: number | null
           player_id?: string
           sixes?: number | null
+          sixes_potential?: number | null
           small_straight?: number | null
+          small_straight_potential?: number | null
           three_kind?: number | null
+          three_kind_potential?: number | null
           threes?: number | null
+          threes_potential?: number | null
           twos?: number | null
+          twos_potential?: number | null
           yahtzee?: number | null
+          yahtzee_potential?: number | null
         }
         Relationships: [
           {
