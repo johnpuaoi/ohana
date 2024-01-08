@@ -171,6 +171,13 @@ export default defineEventHandler(async (event) => {
       .select('*')
       .eq('game_id', body.gameId);
 
+    if (allScorecardsError) {
+      throw createError({
+        statusCode: 500,
+        statusMessage: allScorecardsError.message,
+      });
+    }
+
     if (!scorecards) {
       throw createError({
         statusCode: 400,
@@ -192,6 +199,8 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'There was an error',
       });
     }
+
+    // TODO: update player shushers
 
     return {
       statusCode: 200,
