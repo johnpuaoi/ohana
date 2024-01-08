@@ -3,7 +3,7 @@ import {
   serverSupabaseUser,
 } from '#supabase/server';
 import { generatePotentialScores } from '~/server/utils/yahtzee/scoring';
-import type { YahtzeeScorecards } from '~/types/custom';
+import type { YahtzeeScorecard } from '~/types/custom';
 import type { Database } from '~/types/database.types';
 
 interface YahtzeeRollRequest {

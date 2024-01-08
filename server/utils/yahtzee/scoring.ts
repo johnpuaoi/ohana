@@ -1,4 +1,4 @@
-import type { YahtzeeScorecards } from '~/types/custom';
+import type { YahtzeeScorecard } from '~/types/custom';
 
 export function generateOnes(current_dice: number[]): number {
   // Gather all ones and add them up
@@ -132,8 +132,8 @@ export function generateChance(current_dice: number[]): number {
 }
 
 export function generatePotentialScores(
-  scorecard: YahtzeeScorecards
-): YahtzeeScorecards {
+  scorecard: YahtzeeScorecard
+): YahtzeeScorecard {
   // Ensure current_dice is present
   if (!scorecard.current_dice) {
     throw new Error('current_dice is required for potential score generation');

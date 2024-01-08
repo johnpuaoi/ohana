@@ -7,5 +7,5 @@ export type PlayerShushers =
 
 export type YahtzeeGame = Database['public']['Tables']['yahtzee_games']['Row'];
 
-export type YahtzeeScorecards =
+export type YahtzeeScorecard =
   Database['public']['Tables']['yahtzee_scorecards']['Row'];
