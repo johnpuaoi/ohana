@@ -3,6 +3,8 @@ import {
   serverSupabaseUser,
 } from '#supabase/server';
 import type { Database } from '~/types/database.types';
+import type { H3Event } from 'h3';
+import { isAParticipant } from '~/server/utils/yahtzee/security';
 
 interface CreateScoreCardRequest {
   gameId: string;
@@ -22,6 +24,38 @@ export default defineEventHandler(async (event) => {
   }
 
   const body: CreateScoreCardRequest = await readBody(event);
+
+  // Get the game
+  const { error: currentGameError, data: currentGame } = await client
+    .from('yahtzee_games')
+    .select('*')
+    .eq('id', body.gameId)
+    .single();
+
+  if (currentGameError) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: currentGameError.message,
+    });
+  }
+
+  // Ensure that the game has not started
+  if (currentGame.has_started) {
+    throw createError({
+      statusCode: 400,
+      statusMessage:
+        'The game has already started and no scorecards can be given.',
+    });
+  }
+
+  // Ensure that the player is a participant
+  if (!isAParticipant(currentGame, user.id)) {
+    throw createError({
+      statusCode: 401,
+      statusMessage:
+        'Unauthorized: This player is not a participant of this game.',
+    });
+  }
 
   // Check if player already has a scorecard for this game
   const { error: duplicateError, data: duplicateScorecard } = await client

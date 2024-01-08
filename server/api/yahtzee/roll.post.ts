@@ -3,6 +3,7 @@ import {
   serverSupabaseUser,
 } from '#supabase/server';
 import { generatePotentialScores } from '~/server/utils/yahtzee/scoring';
+import { isUserPlayable } from '~/server/utils/yahtzee/security';
 import type { YahtzeeScorecard } from '~/types/custom';
 import type { Database } from '~/types/database.types';
 
@@ -27,11 +28,14 @@ export default defineEventHandler(async (event) => {
 
   const body: YahtzeeRollRequest = await readBody(event);
 
-  // Figure out how many dice were kept by minusing the total possible dice by the amount of dice kept by the player. This gives us the number of dice to generate.
-  const diesToRoll = 5 - body.toKeepIndexes.length;
+  const isAllowed = await isUserPlayable(body.gameId, event);
 
-  // Roll the dice
-  const rollResult = genDie(diesToRoll);
+  if (!isAllowed) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Invalid Action',
+    });
+  }
 
   // Get the scorecard
   const { data: scorecard, error } = await client
@@ -48,6 +52,26 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  if (!scorecard) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'The player does not have a scorecard.',
+    });
+  }
+
+  if (!hasRollsLeft(scorecard)) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'This player has no rolls left.',
+    });
+  }
+
+  // Figure out how many dice were kept by minusing the total possible dice by the amount of dice kept by the player. This gives us the number of dice to generate.
+  const diesToRoll = 5 - body.toKeepIndexes.length;
+
+  // Roll the dice
+  const rollResult = genDie(diesToRoll);
+
   const diceToRoll = determineIndexesToUpdate(body.toKeepIndexes);
 
   // Update the dice
@@ -63,7 +87,7 @@ export default defineEventHandler(async (event) => {
   // Update the scorecard in supabase.
   const { error: updateScorecardError } = await client
     .from('yahtzee_scorecards')
-    .update(potentialScorecard)
+    .update({ ...potentialScorecard, roll: increaseRoll(scorecard.roll) })
     .eq('game_id', body.gameId)
     .eq('player_id', user.id);
 
@@ -105,4 +129,22 @@ function updateDice(
   });
 
   return current_dice;
+}
+
+function hasRollsLeft(scorecard: YahtzeeScorecard): boolean {
+  if (scorecard.roll === null) {
+    return true;
+  }
+
+  if (scorecard.roll < 3) {
+    return true;
+  }
+
+  return false;
+}
+
+function increaseRoll(roll: number | null) {
+  if (!roll) return 1;
+
+  return roll++;
 }

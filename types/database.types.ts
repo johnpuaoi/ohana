@@ -169,6 +169,7 @@ export interface Database {
           ones: number | null
           ones_potential: number | null
           player_id: string
+          roll: number | null
           sixes: number | null
           sixes_potential: number | null
           small_straight: number | null
@@ -204,6 +205,7 @@ export interface Database {
           ones?: number | null
           ones_potential?: number | null
           player_id: string
+          roll?: number | null
           sixes?: number | null
           sixes_potential?: number | null
           small_straight?: number | null
@@ -239,6 +241,7 @@ export interface Database {
           ones?: number | null
           ones_potential?: number | null
           player_id?: string
+          roll?: number | null
           sixes?: number | null
           sixes_potential?: number | null
           small_straight?: number | null
