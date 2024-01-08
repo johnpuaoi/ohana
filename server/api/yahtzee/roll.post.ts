@@ -63,7 +63,7 @@ export default defineEventHandler(async (event) => {
   // Update the scorecard in supabase.
   const { error: updateScorecardError } = await client
     .from('yahtzee_scorecards')
-    .update(scorecard)
+    .update(potentialScorecard)
     .eq('game_id', body.gameId)
     .eq('player_id', user.id);
 
