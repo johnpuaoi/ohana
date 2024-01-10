@@ -55,7 +55,7 @@ export interface Database {
         Insert: {
           created_at?: string
           full_name: string
-          id: string
+          id?: string
           profile_pic_link?: string | null
           username: string
         }
