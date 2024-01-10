@@ -1,3 +1,7 @@
+<script lang="ts" setup>
+useAuthRedirect();
+</script>
+
 <template>
   <NuxtLayout>
     <NuxtPage />
