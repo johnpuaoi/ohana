@@ -15,6 +15,8 @@ export default defineEventHandler(async (event) => {
 
   const user = await serverSupabaseUser(event);
 
+  console.log(user, event);
+
   // If no user return unauthorized
   if (!user) {
     throw createError({
@@ -34,6 +36,7 @@ export default defineEventHandler(async (event) => {
       room_name: body.room_name,
       join_code: body.join_code,
       private: body.private,
+      players: [user.id],
     })
     .select('id')
     .single();

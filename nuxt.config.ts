@@ -6,4 +6,7 @@ export default defineNuxtConfig({
     redirect: false,
   },
   ssr: false,
+  devServer: {
+    https: true,
+  },
 });
