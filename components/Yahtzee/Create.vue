@@ -5,7 +5,7 @@ const { add: addNotification } = useToast();
 
 const user = useSupabaseUser();
 
-const isCreateModalOpen = ref(true);
+const isCreateModalOpen = ref(false);
 
 const createForm = ref();
 

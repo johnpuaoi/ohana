@@ -52,7 +52,9 @@ onBeforeUnmount(async () => {
 </script>
 
 <template>
-  <div class="overflow-y-auto max-h-[400px] space-y-6">
-    <YahtzeeGame v-for="game in yahtzeeGames" :key="game.id" :game="game" />
+  <div class="space-y-6">
+    <div v-for="game in yahtzeeGames" :key="game.id">
+      <YahtzeeGame :game="game" />
+    </div>
   </div>
 </template>
